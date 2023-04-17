@@ -657,6 +657,15 @@ class WebstackClient(object):
             'reporterDateCreated': reporterDateCreated,
         }, fields=fields, timeout=timeout)
 
+    def CreateLogEntries(self, logEntries, timeout=5):
+        # type: (List[Tuple[str, Any, Dict[str, bytes]]], int) -> Any
+        files = []
+        for logType, logEntry, resources in logEntries:
+            files.append((u'logEntry/%s' % logType, ('', json.dumps(logEntry), 'application/json')))
+            for resourceName, resourceData in resources.iteritems():
+                files.append((u'resource', (resourceName, resourceData)))
+        return self._webclient.APICall('POST', u'logEntry', files=files, timeout=timeout, apiVersion='v2')
+
     #
     # Controller State
     #
