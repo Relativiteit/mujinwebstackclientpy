@@ -10,6 +10,8 @@ import datetime
 import base64
 from email.utils import parsedate
 
+from typing import List, Tuple, Any, Dict
+
 # Mujin imports
 from . import WebstackClientError
 from . import controllerwebclientraw
